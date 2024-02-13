@@ -13,6 +13,7 @@
                 background-color: #FFFFFF;
                 margin-bottom: 40px;
                 margin-top: 20px;
+                size: auto;
 
 
             }
@@ -31,7 +32,7 @@
             }
             body{
                 background-image: url(hotdog.jpeg);
-                background-size: fill;
+                background-size: auto;
             }
             h3{
                 text-align: center;
@@ -117,7 +118,7 @@
               "</br>")
         document.write("<h2>fries: " + numFries + "</h2>" + "<h6>$" + showMoney(numFries*friesPrice) + "</h6>" + "</br>");
         
-        document.write("<h2>sodas:" + numSoda + "</h2>" + "<h6>$" + showMoney(numSoda*sodaPrice) + "</h6>" + "</br>");
+        document.write("<h2>sodas: " + numSoda + "</h2>" + "<h6>$" + showMoney(numSoda*sodaPrice) + "</h6>" + "</br>");
 
         document.write("<h2>Total before discount: $" + beforeDisc + "</br>" + "</br>" );
         document.write("Subtotal after discount: $" + afterDiscount +"</br>" + "</br>");
