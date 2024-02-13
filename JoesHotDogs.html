@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <title>Joe's Hotdogs</title>
+
+        <style div="text/css">
+
+            #boxes{
+                border: 2px solid #000000;
+                max-width: 300px;
+                align-items: center;
+                margin-left: auto;
+                margin-right: auto;
+                background-color: #FFFFFF;
+                margin-bottom: 40px;
+                margin-top: 20px;
+
+
+            }
+            h2{
+                margin-left: 20px;
+                font-size: 10px;
+                font-family: monospace;
+                line-height: 10px;
+            
+            }
+            h1{
+                font-size: 15px;
+                text-align: center;
+                font-family: monospace;
+                letter-spacing: 3px;
+            }
+            body{
+                background-image: url(hotdog.jpeg);
+                background-size: 100%;
+            }
+            h3{
+                text-align: center;
+                margin-top: 70px;
+                font-family: monospace;
+                font-size: 10px;
+                letter-spacing: 4px;
+                line-height: 20px;
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+            h4{
+                font-family: monospace;
+                font-size: 8px;
+                letter-spacing: 4px;
+                text-align: center;
+            }
+            h5{
+                text-align: center;
+                font-family: monospace;
+                font-size: 20px;
+                margin-top: 30px;
+                margin-bottom: 10px;
+                text-shadow: #FFFFFF 2px 2px 2px;
+
+            }
+            h6{
+                text-align: right;
+                margin-right: 30px;
+                font-family: monospace;
+                font-size: 10px;
+                line-height: 1px;
+            }
+
+        </style>
+    </head>
+
+
+    <body>
+        <h5>Joe's Hotdogs</h5>
+        <div id="boxes" class="box">
+        <div id="results">&nbsp;</div>
+        <script>
+        var subTotal;
+        var numDogs;
+        var numFries;
+        var numSoda;
+        const dogPrice= 4.65;
+        const friesPrice= 3.75;
+        const sodaPrice= 1.89;
+        // document.getElementById('results').innerHTML="hello!";
+        // Prompt for hotdogs 
+        numDogs = prompt("How many hotdogs do you want?", '0');
+        // prompt for fries
+        numFries = prompt("How many fries do you want?", '0');
+        // prompt for soda
+        numSoda = prompt("How many sodas do you want?", '0');
+        
+        
+        //set subtotal to basic total
+        var subTotal = showMoney(firstTotal(numDogs, numFries, numSoda));
+        var beforeDisc = subTotal; 
+        var afterDiscount;
+
+        // adding discount if necessary
+        if  (subTotal>= 25){
+            afterDiscount = showMoney(addDiscount(subTotal));
+        
+        }
+        else {
+            afterDiscount = showMoney(subTotal);
+        }
+        // add tax
+        subTotal = showMoney(addTax(subTotal));
+
+        // get date and time for receipt
+        const now = new Date();
+        var datetime = now.toLocaleString();
+
+        document.write("<h1>RECEIPT<h1>"  + "<h4>" + datetime + "<h4>" + "</br>")
+        document.write("<h2>hotdogs: " + numDogs + "</h2>" + "<h6>$" + showMoney(numDogs*dogPrice) + "</h6>" +
+              "</br>")
+        document.write("<h2>fries: " + numFries + "</h2>" + "<h6>$" + showMoney(numFries*friesPrice) + "</h6>" + "</br>");
+        
+        document.write("<h2>sodas:" + numSoda + "</h2>" + "<h6>$" + showMoney(numSoda*sodaPrice) + "</h6>" + "</br>");
+
+        document.write("<h2>Total before discount: $" + beforeDisc + "</br>" + "</br>" );
+        document.write("Subtotal after discount: $" + afterDiscount +"</br>" + "</br>");
+        document.write("Massachusetts meal tax: $" + showMoney(beforeDisc*0.062500) +"</br>" + "</br>");
+        document.write("Final total: $" + subTotal + "</br> </h2>");
+
+        document.write("<h3>Thanks for visiting Joe's hotdogs! Please come again.</h3>")
+
+        function addDiscount(subTotal){
+            subTotal = subTotal*0.90;
+            return subTotal;
+        }
+        function firstTotal(numDogs, numFries, numSoda){
+            var totalMoney;
+            totalMoney = numDogs*dogPrice + numFries*friesPrice + numSoda*sodaPrice;
+            return totalMoney;
+        }
+        function addTax(subTotal){
+            // adding tax
+            subTotal = subTotal +  subTotal*0.0625;
+            var afterTax = subTotal;
+            return afterTax;
+            
+        }
+        function showMoney(num){
+            var rounded = Math.round(num * 100) / 100.00 + 0.000;
+            let converted = rounded.toString();
+            let myString = rounded.toString();
+            let chars = myString.split(".");
+            // if(chars[1].length == 1){
+            //     converted += "0";
+            // }
+            return rounded;
+
+
+        }
+    </script>
+    </div>
+    </body>
+
+   
+
+</html>
