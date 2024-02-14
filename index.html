@@ -13,8 +13,8 @@
                 background-color: #FFFFFF;
                 margin-bottom: 40px;
                 margin-top: 20px;
-                size: auto;
-
+                size: 100%;
+               
 
             }
             h2{
@@ -32,7 +32,8 @@
             }
             body{
                 background-image: url(hotdog.jpeg);
-                background-size: auto;
+                background-size: fill;
+
             }
             h3{
                 text-align: center;
@@ -77,14 +78,15 @@
         <div id="boxes" class="box">
         <div id="results">&nbsp;</div>
         <script>
+        // store item totals
         var subTotal;
         var numDogs;
         var numFries;
         var numSoda;
+        //item prices
         const dogPrice= 4.65;
         const friesPrice= 3.75;
         const sodaPrice= 1.89;
-        // document.getElementById('results').innerHTML="hello!";
         // Prompt for hotdogs 
         numDogs = prompt("How many hotdogs do you want?", '0');
         // prompt for fries
@@ -94,8 +96,8 @@
         
         
         //set subtotal to basic total
-        var subTotal = showMoney(firstTotal(numDogs, numFries, numSoda));
-        var beforeDisc = subTotal; 
+        subTotal = firstTotal(numDogs, numFries, numSoda);
+        var beforeDisc = showMoney(subTotal); 
         var afterDiscount;
 
         // adding discount if necessary
@@ -107,11 +109,14 @@
             afterDiscount = showMoney(subTotal);
         }
         // add tax
-        subTotal = showMoney(addTax(subTotal));
+        subTotal = addTax(subTotal);
 
         // get date and time for receipt
         const now = new Date();
         var datetime = now.toLocaleString();
+
+        // write out the whole receipt
+        // date/time, item quantity and price, then full prices after tax and discounts
 
         document.write("<h1>RECEIPT<h1>"  + "<h4>" + datetime + "<h4>" + "</br>")
         document.write("<h2>hotdogs: " + numDogs + "</h2>" + "<h6>$" + showMoney(numDogs*dogPrice) + "</h6>" +
@@ -123,19 +128,23 @@
         document.write("<h2>Total before discount: $" + beforeDisc + "</br>" + "</br>" );
         document.write("Subtotal after discount: $" + afterDiscount +"</br>" + "</br>");
         document.write("Massachusetts meal tax: $" + showMoney(beforeDisc*0.062500) +"</br>" + "</br>");
-        document.write("Final total: $" + subTotal + "</br> </h2>");
+        document.write("Final total: $" + showMoney(subTotal))  + "</br> </h2>";
 
+        //Thank you message
         document.write("<h3>Thanks for visiting Joe's hotdogs! Please come again.</h3>")
 
+        //function for adding discount
         function addDiscount(subTotal){
             subTotal = subTotal*0.90;
             return subTotal;
         }
+        //function for subtotal of items
         function firstTotal(numDogs, numFries, numSoda){
             var totalMoney;
             totalMoney = numDogs*dogPrice + numFries*friesPrice + numSoda*sodaPrice;
             return totalMoney;
         }
+        //function for adding tax
         function addTax(subTotal){
             // adding tax
             subTotal = subTotal +  subTotal*0.0625;
@@ -143,15 +152,29 @@
             return afterTax;
             
         }
+        //function for parsing numbers into strings in proper decimal form
         function showMoney(num){
-            var rounded = Math.round(num * 100) / 100.00 + 0.000;
-            let converted = rounded.toString();
+            //round the number down to closest two decimals
+            var rounded = Math.round(num * 100) / 100.00;
+            //convert to string
+            var converted = rounded.toString();
             let myString = rounded.toString();
+            // split at the decimal
             let chars = myString.split(".");
-            // if(chars[1].length == 1){
-            //     converted += "0";
-            // }
-            return rounded;
+            //if there is a decimal...
+            if (chars.length > 1){
+                //but rounded down to the tenth...
+            if(chars[1].length == 1){
+                // add a zero to string if necessary
+                converted += "0";
+            }
+        }
+        else{
+            // if there is no decimal add them
+            converted += ".00";
+        }
+        
+            return converted;
 
 
         }
